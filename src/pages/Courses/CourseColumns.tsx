@@ -32,11 +32,20 @@ export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, ha
     enableGlobalFilter: false
   }),
 
+// Column for the instructor
+columnHelper.accessor("instructor.name", {
+  id: "instructor",
+  header: "Instructor Name",
+  enableSorting: true,
+  enableColumnFilter: true,
+  enableGlobalFilter: false
+}),
+
   // Column for the creation date
   columnHelper.accessor("created_at", {
     header: "Creation Date",
     enableSorting: true,
-    enableColumnFilter: false,
+    enableColumnFilter: true,
     enableGlobalFilter: false
   }),
 
@@ -44,8 +53,8 @@ export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, ha
   columnHelper.accessor("updated_at", {
     header: "Updated Date",
     enableSorting: true,
-    enableColumnFilter: false,
-    enableGlobalFilter: false
+    enableColumnFilter: true,
+    enableGlobalFilter: true
   }),
   
   // Actions column with edit, delete, TA, and copy buttons

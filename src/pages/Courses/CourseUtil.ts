@@ -1,7 +1,7 @@
 import { IFormOption } from "components/Form/interfaces";
 import { getPrivilegeFromID, hasAllPrivilegesOf } from "utils/util";
 import axiosClient from "../../utils/axios_client";
-import { ICourseRequest, ICourseResponse, IInstitution, IInstitutionResponse, IInstructor, IUserRequest, ROLE } from "../../utils/interfaces";
+import { ICourseRequest, ICourseResponse, IInstitution, IInstitutionResponse,IInstructorResponse, IInstructor, IUserRequest, ROLE } from "../../utils/interfaces";
 
 /**
  * @author Atharva Thorve, on December, 2023
@@ -146,20 +146,39 @@ export const formatDate = (dateString: string): string => {
 };
 
 // Function to merge data and names
-export const mergeDataAndNames = (data: ICourseResponse[], names: IInstitutionResponse[]): any => {
+// export const mergeDataAndNames = (data: ICourseResponse[], names: IInstitutionResponse[]): any => {
+//   return data.map((dataObj) => {
+//     const matchingNameObject = names.find((nameObj) => nameObj.id === dataObj.institution_id);
+
+//     if (matchingNameObject) {
+//       return {
+//         ...dataObj,
+//         institution: {
+//           id: matchingNameObject.id,
+//           name: matchingNameObject.name,
+//         },
+//       };
+//     }
+
+//     return dataObj;
+//   });
+// };
+
+export const mergeDataAndNames = (data: ICourseResponse[], institutionNames: IInstitutionResponse[], instructorNames: IInstructorResponse[]): any => {
   return data.map((dataObj) => {
-    const matchingNameObject = names.find((nameObj) => nameObj.id === dataObj.institution_id);
+    // Merge institution data
+    const matchingInstitution = institutionNames.find((nameObj) => nameObj.id === dataObj.institution_id);
+    const institutionData = matchingInstitution ? { id: matchingInstitution.id, name: matchingInstitution.name } : {};
 
-    if (matchingNameObject) {
-      return {
-        ...dataObj,
-        institution: {
-          id: matchingNameObject.id,
-          name: matchingNameObject.name,
-        },
-      };
-    }
+    // Merge instructor data
+    const matchingInstructor = instructorNames.find((instructorObj) => instructorObj.id === dataObj.instructor_id);
+    const instructorData = matchingInstructor ? { id: matchingInstructor.id, name: matchingInstructor.name } : {};
 
-    return dataObj;
+    // Merge course data with institution and instructor data
+    return {
+      ...dataObj,
+      institution: institutionData,
+      instructor: instructorData
+    };
   });
 };
