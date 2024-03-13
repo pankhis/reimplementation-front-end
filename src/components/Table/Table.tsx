@@ -47,7 +47,7 @@ const Table: React.FC<TableProps> = ({
       header: ({ table }: any) => {
         return (
           <RowSelectCheckBox
-            {...{
+            {...{ 
               checked: table.getIsAllRowsSelected(),
               indeterminate: table.getIsSomeRowsSelected(),
               onChange: table.getToggleAllRowsSelectedHandler(),

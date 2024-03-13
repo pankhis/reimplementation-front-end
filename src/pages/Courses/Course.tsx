@@ -23,6 +23,7 @@ import { formatDate, mergeDataAndNames } from "./CourseUtil";
 const Courses = () => {
   const { error, isLoading, data: CourseResponse, sendRequest: fetchCourses } = useAPI();
   const { data: InstitutionResponse, sendRequest: fetchInstitutions} = useAPI();
+  const { data: InstructorResponse, sendRequest: fetchInstructors} = useAPI();
   const auth = useSelector(
     (state: RootState) => state.authentication,
     (prev, next) => prev.isAuthenticated === next.isAuthenticated
@@ -48,8 +49,9 @@ const Courses = () => {
       fetchCourses({ url: `/courses` });
       // ToDo: Remove this API call later after the above ToDo is completed
       fetchInstitutions({ url: `/institutions` });
+      fetchInstructors({ url: `/users` });
     }
-  }, [fetchCourses, fetchInstitutions, location, showDeleteConfirmation.visible, auth.user.id, showCopyConfirmation.visible]);
+  }, [fetchCourses, fetchInstitutions,fetchInstructors, location, showDeleteConfirmation.visible, auth.user.id, showCopyConfirmation.visible]);
 
   // Error alert for API errors
   useEffect(() => {
@@ -98,8 +100,13 @@ const Courses = () => {
     () => (isLoading || !InstitutionResponse?.data ? [] : InstitutionResponse.data),
     [InstitutionResponse?.data, isLoading]
   );
+
+  const instructorData = useMemo(
+    () => (isLoading || !InstructorResponse?.data ? [] : InstructorResponse.data),
+    [InstructorResponse?.data, isLoading]
+  );
   
-  tableData = mergeDataAndNames(tableData, institutionData);
+  tableData = mergeDataAndNames(tableData, institutionData, instructorData);
 
   const formattedTableData = tableData.map((item: any) => ({
     ...item,
@@ -141,6 +148,7 @@ const Courses = () => {
               columnVisibility={{
                 id: false,
                 institution: auth.user.role === ROLE.SUPER_ADMIN.valueOf(),
+                instructor: auth.user.role === ROLE.SUPER_ADMIN.valueOf(),
               }}
             />
           </Row>
