@@ -2,7 +2,7 @@ import { Row as TRow } from "@tanstack/react-table";
 import Table from "components/Table/Table";
 import useAPI from "hooks/useAPI";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Tooltip } from "react-bootstrap";
 import { RiHealthBookLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import { courseColumns as COURSE_COLUMNS } from "./CourseColumns";
 import CopyCourse from "./CourseCopy";
 import DeleteCourse from "./CourseDelete";
 import { formatDate, mergeDataAndNames } from "./CourseUtil";
+import { OverlayTrigger } from "react-bootstrap";
 
 // Courses Component: Displays and manages courses, including CRUD operations.
 
@@ -122,9 +123,14 @@ const Courses = () => {
           </Row>
           <Row>
             <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip>Add New Course</Tooltip>}
+              >
               <Button variant="outline-success" onClick={() => navigate("new")}>
                 <RiHealthBookLine />
               </Button>
+              </OverlayTrigger>
             </Col>
             {showDeleteConfirmation.visible && (
               <DeleteCourse courseData={showDeleteConfirmation.data!} onClose={onDeleteCourseHandler} />
