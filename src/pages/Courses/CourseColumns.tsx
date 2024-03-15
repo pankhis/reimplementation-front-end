@@ -3,6 +3,7 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BsPencilFill, BsPersonXFill } from "react-icons/bs";
 import { MdContentCopy, MdDelete } from "react-icons/md";
 import { ICourseResponse as ICourse } from "../../utils/interfaces";
+import DateFilter from "../../components/Table/DateFilter";
 
 /**
  * @author Atharva Thorve, on December, 2023
@@ -12,12 +13,13 @@ import { ICourseResponse as ICourse } from "../../utils/interfaces";
 // Course Columns Configuration: Defines the columns for the courses table
 type Fn = (row: Row<ICourse>) => void;
 const columnHelper = createColumnHelper<ICourse>();
-export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, handleCopy: Fn) => [
+export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, handleCopy: Fn, handleShowDetails:(course: ICourse) => void) => [
 
   // Column for the course name
   columnHelper.accessor("name", {
     id: "name",
     header: "Name",
+    cell: (info) => <a href="#" onClick={() => handleShowDetails(info.row.original)}>{info.getValue()}</a>,
     enableSorting: true,
     enableColumnFilter: true,
     enableGlobalFilter: false
@@ -45,8 +47,9 @@ columnHelper.accessor("instructor.name", {
   columnHelper.accessor("created_at", {
     header: "Creation Date",
     enableSorting: true,
-    enableColumnFilter: true,
-    enableGlobalFilter: false
+    enableColumnFilter: false,
+    enableGlobalFilter: false,
+    
   }),
 
   // Column for the last updated date
