@@ -32,6 +32,15 @@ export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, ha
     enableGlobalFilter: false
   }),
 
+    // Column for the instructor
+  columnHelper.accessor("instructor.name", {
+    id: "instructor",
+    header: "Instructor Name",
+    enableSorting: true,
+    enableColumnFilter: true,
+    enableGlobalFilter: false
+  }),
+
   // Column for the creation date
   columnHelper.accessor("created_at", {
     header: "Creation Date",
