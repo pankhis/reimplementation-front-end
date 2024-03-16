@@ -115,6 +115,19 @@ const Courses = () => {
     updated_at: formatDate(item.updated_at),
   }));
 
+    // `auth.user.id` holds the ID of the logged-in user
+    const loggedInUserId = auth.user.id;
+    const loggedInUserRole = auth.user.role;
+
+    const visibleCourses = useMemo(() => {
+      // Show all courses to admin and superadmin roles
+      if (loggedInUserRole === ROLE.ADMIN.valueOf() || loggedInUserRole === ROLE.SUPER_ADMIN.valueOf()) {
+        return formattedTableData;
+      }
+      // Otherwise, only show courses where the logged-in user is the instructor
+      return formattedTableData.filter((CourseResponse: { instructor_id: number; }) => CourseResponse.instructor_id === loggedInUserId);
+    }, [formattedTableData, loggedInUserRole]);
+
   // Render the Courses component
   
   return (
@@ -164,7 +177,7 @@ const Courses = () => {
           <Row>
             <Table
               showGlobalFilter={false}
-              data={formattedTableData}
+              data={visibleCourses}
               columns={tableColumns}
               columnVisibility={{
                 id: false,
