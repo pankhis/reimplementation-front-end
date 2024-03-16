@@ -123,7 +123,22 @@ const Courses = () => {
         <Container fluid className="px-md-4">
           <Row className="mt-md-2 mb-md-2">
             <Col className="text-center">
-              <h1>Manage Courses</h1>
+              {/* <h1>Manage Courses</h1> */}
+              <h1>
+              {auth.user.role === ROLE.INSTRUCTOR.valueOf() ? (
+                <>
+                  Instructed by: {auth.user.full_name}
+                </>
+              ) : auth.user.role === ROLE.TA.valueOf() ? (
+                <>
+                  Assisted by: {auth.user.full_name}
+                </>
+              ) : (
+                <>
+                  Manage Courses
+                </>
+              )}
+              </h1>
             </Col>
             <hr />
           </Row>
