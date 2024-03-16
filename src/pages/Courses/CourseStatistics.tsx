@@ -33,7 +33,7 @@ const CoursesStatistics: React.FC = () => {
       fetchCourses({ url: '/courses' }); // Assuming sendRequest accepts an object with a URL property
       fetchInstitutions({ url: '/institutions' }); 
       fetchusers({url:'/users'});
-    }, [fetchCourses, fetchInstitutions]);
+    }, [fetchCourses, fetchInstitutions, fetchusers]);
 
 
     useEffect(() => {
