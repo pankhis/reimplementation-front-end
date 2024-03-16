@@ -129,11 +129,11 @@ const Courses = () => {
           </Row>
           <Row>
 
-            <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
+            {/* <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
               <Button variant="outline-success" onClick={() => navigate("statistics")}>
                 <RiHealthBookLine />
               </Button>
-            </Col>
+            </Col> */}
 
             <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
               <Button variant="outline-success" onClick={() => navigate("new")}>

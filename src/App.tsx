@@ -133,10 +133,10 @@ function App() {
                 },
               ]
             },
-            {
-              path: "statistics",
-              element: <CourseStatistics/>, // Replace "StatisticsComponent" with your actual component for the statistics page
-            }
+            // {
+            //   path: "statistics",
+            //   element: <CourseStatistics/>,
+            // }
           ], // Added the missing closing curly brace
         },
         {
