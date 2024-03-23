@@ -3,7 +3,6 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { BsPencilFill, BsPersonXFill } from "react-icons/bs";
 import { MdContentCopy, MdDelete } from "react-icons/md";
 import { ICourseResponse as ICourse } from "../../utils/interfaces";
-import DateFilter from "../../components/Table/DateFilter";
 
 /**
  * @author Atharva Thorve, on December, 2023

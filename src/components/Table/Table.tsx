@@ -98,7 +98,6 @@ const Table: React.FC<TableProps> = ({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibilityState,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortdedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
