@@ -30,6 +30,7 @@ import { loadCourseInstructorDataAndInstitutions } from "pages/Courses/CourseUti
 import TA from "pages/TA/TA";
 import TAEditor from "pages/TA/TAEditor";
 import { loadTAs } from "pages/TA/TAUtil";
+import CourseStatistics from "pages/Courses/CourseStatistics";
 
 function App() {
   const router = createBrowserRouter([
@@ -132,6 +133,10 @@ function App() {
                 },
               ]
             },
+            // {
+            //   path: "statistics",
+            //   element: <CourseStatistics/>,
+            // }
           ], // Added the missing closing curly brace
         },
         {

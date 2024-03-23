@@ -2,7 +2,7 @@ import { Row as TRow } from "@tanstack/react-table";
 import Table from "components/Table/Table";
 import useAPI from "hooks/useAPI";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Tooltip } from "react-bootstrap";
 import { RiHealthBookLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import { courseColumns as COURSE_COLUMNS } from "./CourseColumns";
 import CopyCourse from "./CourseCopy";
 import DeleteCourse from "./CourseDelete";
 import { formatDate, mergeDataAndNames } from "./CourseUtil";
+import { OverlayTrigger } from "react-bootstrap";
 
 import CourseDetails from "./CourseDetails"; 
 import { ICourseResponse as ICourse } from "../../utils/interfaces";
@@ -125,6 +126,19 @@ const Courses = () => {
     updated_at: formatDate(item.updated_at),
   }));
 
+    // `auth.user.id` holds the ID of the logged-in user
+    const loggedInUserId = auth.user.id;
+    const loggedInUserRole = auth.user.role;
+
+    const visibleCourses = useMemo(() => {
+      // Show all courses to admin and superadmin roles
+      if (loggedInUserRole === ROLE.ADMIN.valueOf() || loggedInUserRole === ROLE.SUPER_ADMIN.valueOf()) {
+        return formattedTableData;
+      }
+      // Otherwise, only show courses where the logged-in user is the instructor
+      return formattedTableData.filter((CourseResponse: { instructor_id: number; }) => CourseResponse.instructor_id === loggedInUserId);
+    }, [formattedTableData, loggedInUserRole]);
+
   // Render the Courses component
   
   return (
@@ -134,15 +148,42 @@ const Courses = () => {
         <Container fluid className="px-md-4">
           <Row className="mt-md-2 mb-md-2">
             <Col className="text-center">
-              <h1>Manage Courses</h1>
+              {/* <h1>Manage Courses</h1> */}
+              <h1>
+              {auth.user.role === ROLE.INSTRUCTOR.valueOf() ? (
+                <>
+                  Instructed by: {auth.user.full_name}
+                </>
+              ) : auth.user.role === ROLE.TA.valueOf() ? (
+                <>
+                  Assisted by: {auth.user.full_name}
+                </>
+              ) : (
+                <>
+                  Manage Courses
+                </>
+              )}
+              </h1>
             </Col>
             <hr />
           </Row>
           <Row>
+
+            {/* <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
+              <Button variant="outline-success" onClick={() => navigate("statistics")}>
+                <RiHealthBookLine />
+              </Button>
+            </Col> */}
+
             <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
+              <OverlayTrigger
+                placement="top"
+                overlay={<Tooltip>Add New Course</Tooltip>}
+              >
               <Button variant="outline-success" onClick={() => navigate("new")}>
                 <RiHealthBookLine />
               </Button>
+              </OverlayTrigger>
             </Col>
             {showDeleteConfirmation.visible && (
               <DeleteCourse courseData={showDeleteConfirmation.data!} onClose={onDeleteCourseHandler} />
@@ -154,7 +195,7 @@ const Courses = () => {
           <Row>
             <Table
               showGlobalFilter={false}
-              data={formattedTableData}
+              data={visibleCourses}
               columns={tableColumns}
               columnVisibility={{
                 id: false,
