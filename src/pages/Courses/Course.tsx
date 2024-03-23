@@ -15,6 +15,9 @@ import DeleteCourse from "./CourseDelete";
 import { formatDate, mergeDataAndNames } from "./CourseUtil";
 import { OverlayTrigger } from "react-bootstrap";
 
+import CourseDetails from "./CourseDetails"; 
+import { ICourseResponse as ICourse } from "../../utils/interfaces";
+
 // Courses Component: Displays and manages courses, including CRUD operations.
 
 /**
@@ -32,6 +35,14 @@ const Courses = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+
+  // show course
+  const [showDetailsModal, setShowDetailsModal] = useState<boolean>(false);
+  const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
+  const handleShowDetails = (course: ICourse) => {
+    setSelectedCourse(course);
+    setShowDetailsModal(true);
+  };
 
   // State for delete and copy confirmation modals
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<{
@@ -88,8 +99,8 @@ const Courses = () => {
   );
 
   const tableColumns = useMemo(
-    () => COURSE_COLUMNS(onEditHandle, onDeleteHandle, onTAHandle, onCopyHandle),
-    [onDeleteHandle, onEditHandle, onTAHandle, onCopyHandle]
+    () => COURSE_COLUMNS(onEditHandle, onDeleteHandle, onTAHandle, onCopyHandle, handleShowDetails),
+    [onDeleteHandle, onEditHandle, onTAHandle, onCopyHandle, handleShowDetails]
   );
 
   let tableData = useMemo(
@@ -195,6 +206,7 @@ const Courses = () => {
           </Row>
         </Container>
       </main>
+      <CourseDetails show={showDetailsModal} onHide={() => setShowDetailsModal(false)} course={selectedCourse} />
     </>
   );
 };

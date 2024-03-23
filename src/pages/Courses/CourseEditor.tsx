@@ -55,7 +55,6 @@ const CourseEditor: React.FC<IEditor> = ({ mode }) => {
   );
   const { courseData, institutions, instructors }: any = useLoaderData();
   const [usersList, setUsersList] = useState<any[]>([]);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
