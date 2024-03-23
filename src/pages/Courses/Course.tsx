@@ -21,9 +21,9 @@ import { formatDate, mergeDataAndNames } from "./CourseUtil";
  * @author Mrityunjay Joshi on December, 2023
  */
 const Courses = () => {
-  const { error, isLoading, data: CourseResponse, sendRequest: fetchCourses } = useAPI();
-  const { data: InstitutionResponse, sendRequest: fetchInstitutions} = useAPI();
-  const { data: InstructorResponse, sendRequest: fetchInstructors} = useAPI();
+  const { error, isLoading, data: CoursResponseData, sendRequest: fetchCourses } = useAPI();
+  const { data: InstitutionResponseData, sendRequest: fetchInstitutions} = useAPI();
+  const { data: InstructorResponseData, sendRequest: fetchInstructors} = useAPI();
   const auth = useSelector(
     (state: RootState) => state.authentication,
     (prev, next) => prev.isAuthenticated === next.isAuthenticated
@@ -92,18 +92,18 @@ const Courses = () => {
   );
 
   let tableData = useMemo(
-    () => (isLoading || !CourseResponse?.data ? [] : CourseResponse.data),
-    [CourseResponse?.data, isLoading]
+    () => (isLoading || !CoursResponseData?.data ? [] : CoursResponseData.data),
+    [CoursResponseData?.data, isLoading]
   );
 
   const institutionData = useMemo(
-    () => (isLoading || !InstitutionResponse?.data ? [] : InstitutionResponse.data),
-    [InstitutionResponse?.data, isLoading]
+    () => (isLoading || !InstitutionResponseData?.data ? [] : InstitutionResponseData.data),
+    [InstitutionResponseData?.data, isLoading]
   );
 
   const instructorData = useMemo(
-    () => (isLoading || !InstructorResponse?.data ? [] : InstructorResponse.data),
-    [InstructorResponse?.data, isLoading]
+    () => (isLoading || !InstructorResponseData?.data ? [] : InstructorResponseData.data),
+    [InstructorResponseData?.data, isLoading]
   );
   
   tableData = mergeDataAndNames(tableData, institutionData, instructorData);
@@ -128,13 +128,6 @@ const Courses = () => {
             <hr />
           </Row>
           <Row>
-
-            {/* <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
-              <Button variant="outline-success" onClick={() => navigate("statistics")}>
-                <RiHealthBookLine />
-              </Button>
-            </Col> */}
-
             <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
               <Button variant="outline-success" onClick={() => navigate("new")}>
                 <RiHealthBookLine />
