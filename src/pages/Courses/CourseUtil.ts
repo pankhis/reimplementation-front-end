@@ -4,9 +4,11 @@ import axiosClient from "../../utils/axios_client";
 import { ICourseRequest, ICourseResponse, IInstitution, IInstitutionResponse,IInstructorResponse, IInstructor, IUserRequest, ROLE } from "../../utils/interfaces";
 
 /**
- * @author Atharva Thorve, on December, 2023
- * @author Mrityunjay Joshi, on December, 2023
+ * @author Aniket Singh Shaktawat, on March, 2024 
+ * @author Pankhi Saini on March, 2024
+ * @author Siddharth Shah on March, 2024
  */
+
 // Course Utility Functions and Constants
 
 // Enumeration for course visibility options
@@ -145,25 +147,7 @@ export const formatDate = (dateString: string): string => {
   return new Intl.DateTimeFormat('en-US', options).format(date);
 };
 
-// Function to merge data and names
-// export const mergeDataAndNames = (data: ICourseResponse[], names: IInstitutionResponse[]): any => {
-//   return data.map((dataObj) => {
-//     const matchingNameObject = names.find((nameObj) => nameObj.id === dataObj.institution_id);
-
-//     if (matchingNameObject) {
-//       return {
-//         ...dataObj,
-//         institution: {
-//           id: matchingNameObject.id,
-//           name: matchingNameObject.name,
-//         },
-//       };
-//     }
-
-//     return dataObj;
-//   });
-// };
-
+// Function to merge course data with their respective institution and instructor data
 export const mergeDataAndNames = (data: ICourseResponse[], institutionNames: IInstitutionResponse[], instructorNames: IInstructorResponse[]): any => {
   return data.map((dataObj) => {
     // Merge institution data

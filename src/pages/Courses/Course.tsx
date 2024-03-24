@@ -21,8 +21,9 @@ import { ICourseResponse as ICourse } from "../../utils/interfaces";
 // Courses Component: Displays and manages courses, including CRUD operations.
 
 /**
- * @author Atharva Thorve, on December, 2023 
- * @author Mrityunjay Joshi on December, 2023
+ * @author Aniket Singh Shaktawat, on March, 2024 
+ * @author Pankhi Saini on March, 2024
+ * @author Siddharth Shah on March, 2024
  */
 const Courses = () => {
   const { error, isLoading, data: CourseResponse, sendRequest: fetchCourses } = useAPI();
@@ -148,7 +149,6 @@ const Courses = () => {
         <Container fluid className="px-md-4">
           <Row className="mt-md-2 mb-md-2">
             <Col className="text-center">
-              {/* <h1>Manage Courses</h1> */}
               <h1>
               {auth.user.role === ROLE.INSTRUCTOR.valueOf() ? (
                 <>
@@ -168,12 +168,6 @@ const Courses = () => {
             <hr />
           </Row>
           <Row>
-
-            {/* <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
-              <Button variant="outline-success" onClick={() => navigate("statistics")}>
-                <RiHealthBookLine />
-              </Button>
-            </Col> */}
 
             <Col md={{ span: 1, offset: 11 }} style={{paddingBottom: "10px"}}>
               <OverlayTrigger

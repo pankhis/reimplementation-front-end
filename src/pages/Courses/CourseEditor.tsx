@@ -16,8 +16,9 @@ import { ICourseFormValues, courseVisibility, noSpacesSpecialCharsQuotes, transf
 
 
 /**
- * @author Atharva Thorve, on December, 2023
- * @author Mrityunjay Joshi, on December, 2023
+ * @author Aniket Singh Shaktawat, on March, 2024 
+ * @author Pankhi Saini on March, 2024
+ * @author Siddharth Shah on March, 2024
  */
 
 // CourseEditor Component: Modal for creating or updating a course.
@@ -54,7 +55,6 @@ const CourseEditor: React.FC<IEditor> = ({ mode }) => {
     (prev, next) => prev.isAuthenticated === next.isAuthenticated
   );
   const { courseData, institutions, instructors }: any = useLoaderData();
-  const [usersList, setUsersList] = useState<any[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,53 +63,28 @@ const CourseEditor: React.FC<IEditor> = ({ mode }) => {
     label: string;
     value: string;
   }
-  //const newInstructors: IFormOption[] = [];
-  const [newInstructors, setNewInstructors] = useState<IFormOption[]>([]);
-  //newInstructors.push({label:'Select an Instructor', value:String('')});
+
+  const [filteredInstructors, setFilteredInstructors] = useState<IFormOption[]>([]);
+
 
   useEffect(() => {
     fetchusers({url:'/users'});
   }, [fetchusers]);
 
-
-  // useEffect(() => {
-  //   if(users) { 
-  //       setUsersList(users.data);
-  //       console.log(usersList);
-  //   }
-  // }, [usersList]);
-
+// useEffect hook to update the instructors list whenever the 'users' data changes
   useEffect(() => {
     if (users) {
       const instructorsList: IFormOption[] = [{ label: 'Select an Instructor', value: '' }];
-  
-      // Filter and map users to create instructors list
-      const filteredInstructors = users.data.filter((user: any) => user.role.name === 'Instructor');
-      filteredInstructors.forEach((instructor: any) => {
+      const onlyInstructors = users.data.filter((user: any) => user.role.name === 'Instructor');
+      // Iterate over the filtered instructors to create an option object for each
+      // and add it to the 'instructorsList'
+      onlyInstructors.forEach((instructor: any) => {
         instructorsList.push({ label: instructor.name, value: String(instructor.id) });
       });
   
-      setNewInstructors(instructorsList); // Update newInstructors state
+      setFilteredInstructors(instructorsList);
     }
   }, [users]);
-
-  // useEffect(() => {
-  // if(usersList) {  
-  //   for (let i = 0; i < instructors.length; i++) {
-  //     const number = parseInt(instructors[i].value, 10);
-  //     const u = usersList.find(user => user.id === number && user.role.name === 'Instructor');
-  //     if (u) {
-  //       newInstructors.push({label:u.name, value:String(u.id)});
-  //     }
-  //   }
-  //   console.log("GOT IT");
-  //   console.log(newInstructors);
-  // }
-  // } , [usersList,newInstructors]);
-
-  useEffect(() => {
-    console.log("New Instructors:", newInstructors);
-  }, [newInstructors]);
 
   initialValues.institution_id = auth.user.institution_id;
 
@@ -186,7 +161,7 @@ const CourseEditor: React.FC<IEditor> = ({ mode }) => {
                   controlId="course-instructor"
                   name="instructor_id"
                   disabled={mode === "update" || auth.user.role !== ROLE.SUPER_ADMIN.valueOf()}
-                  options={newInstructors}
+                  options={filteredInstructors}
                   inputGroupPrepend={
                     <InputGroup.Text id="course-inst-prep">Instructors</InputGroup.Text>
                   }

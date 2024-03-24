@@ -5,8 +5,9 @@ import { MdContentCopy, MdDelete } from "react-icons/md";
 import { ICourseResponse as ICourse } from "../../utils/interfaces";
 
 /**
- * @author Atharva Thorve, on December, 2023
- * @author Mrityunjay Joshi on December, 2023
+ * @author Aniket Singh Shaktawat, on March, 2024 
+ * @author Pankhi Saini on March, 2024
+ * @author Siddharth Shah on March, 2024
  */
 
 // Course Columns Configuration: Defines the columns for the courses table
@@ -33,7 +34,7 @@ export const courseColumns = (handleEdit: Fn, handleDelete: Fn, handleTA: Fn, ha
     enableGlobalFilter: false
   }),
 
-    // Column for the instructor
+  // Column for the instructor name
   columnHelper.accessor("instructor.name", {
     id: "instructor",
     header: "Instructor Name",
