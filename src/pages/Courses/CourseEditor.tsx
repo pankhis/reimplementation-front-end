@@ -54,7 +54,7 @@ const CourseEditor: React.FC<IEditor> = ({ mode }) => {
     (state: RootState) => state.authentication,
     (prev, next) => prev.isAuthenticated === next.isAuthenticated
   );
-  const { courseData, institutions, instructors }: any = useLoaderData();
+  const { courseData, institutions }: any = useLoaderData();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();

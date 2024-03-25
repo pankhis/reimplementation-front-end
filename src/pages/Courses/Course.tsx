@@ -12,7 +12,7 @@ import { ICourseResponse, ROLE } from "../../utils/interfaces";
 import { courseColumns as COURSE_COLUMNS } from "./CourseColumns";
 import CopyCourse from "./CourseCopy";
 import DeleteCourse from "./CourseDelete";
-import { formatDate, mergeDataAndNames } from "./CourseUtil";
+import { formatDate, mergeDataAndNamesAndInstructors } from "./CourseUtil";
 import { OverlayTrigger } from "react-bootstrap";
 
 import CourseDetails from "./CourseDetails"; 
@@ -119,7 +119,7 @@ const Courses = () => {
     [InstructorResponse?.data, isLoading]
   );
   
-  tableData = mergeDataAndNames(tableData, institutionData, instructorData);
+  tableData = mergeDataAndNamesAndInstructors(tableData, institutionData, instructorData);
 
   const formattedTableData = tableData.map((item: any) => ({
     ...item,

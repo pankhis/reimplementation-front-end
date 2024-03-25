@@ -148,7 +148,7 @@ export const formatDate = (dateString: string): string => {
 };
 
 // Function to merge course data with their respective institution and instructor data
-export const mergeDataAndNames = (data: ICourseResponse[], institutionNames: IInstitutionResponse[], instructorNames: IInstructorResponse[]): any => {
+export const mergeDataAndNamesAndInstructors = (data: ICourseResponse[], institutionNames: IInstitutionResponse[], instructorNames: IInstructorResponse[]): any => {
   return data.map((dataObj) => {
     // Merge institution data
     const matchingInstitution = institutionNames.find((nameObj) => nameObj.id === dataObj.institution_id);
