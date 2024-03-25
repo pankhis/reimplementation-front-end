@@ -1,5 +1,5 @@
 # Program 3 - E2425. Create a Courses user interface in ReactJS - Team APS
-# About
+## About
 
 The Courses page showcases a comprehensive list of courses, featuring vital information like the course title, institution name, dates of creation and updates, as well as associated functionalities like Edit course, Delete course, Add TA, Duplicate course.
 
