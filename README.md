@@ -134,7 +134,7 @@ Since the changes revolve around UI implementation, the features need to be manu
 
 ## Important Links
 
-- [Pull Request](link)
+- [Pull Request](https://github.com/expertiza/reimplementation-front-end/pull/43)
 - [GitHub Repo](https://github.com/pankhis/reimplementation-front-end/tree/main)
 
 ## Team
